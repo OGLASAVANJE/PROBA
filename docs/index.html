@@ -22,16 +22,19 @@
             height: 500px;
         }
 
-        /* Tačke sa tekstom */
+        /* Sekcija sa tačkama */
         .info-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 20px;
-            text-align: left;
+            gap: 20px; /* Razmak između tačaka */
         }
 
+        /* Tačke sa tekstom */
         .info-point {
             display: flex;
             align-items: center;
-            margin: 10px 0;
         }
 
         .info-point .dot {
@@ -47,6 +50,10 @@
 
         .info-point.blue .dot {
             background-color: blue;
+        }
+
+        .info-point.green .dot {
+            background-color: green;
         }
 
         .info-point span {
@@ -93,7 +100,7 @@
             <div class="dot"></div>
             <span>Pogledaj sve oglase u Aleksincu</span>
         </div>
-        <div class="info-point blue">
+        <div class="info-point green">
             <div class="dot"></div>
             <span>Gde će sve oglas biti prikazan</span>
         </div>
