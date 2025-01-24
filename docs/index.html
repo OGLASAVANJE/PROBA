@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oglas u Aleksincu</title>
+    <title>Moja stranica</title>
     <style>
+        /* Stil za telo stranice */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* svetlo plava pozadina */
+            color: #333; /* tamna boja teksta */
+            margin: 0;
+            padding: 0;
+        }
+
         /* Glavni okvir */
         .oglasialeksinac-container {
             border: 2px solid #333;
@@ -19,46 +28,7 @@
             align-items: center;
             box-sizing: border-box;
             overflow: hidden;
-            height: 500px;
-        }
-
-        /* Sekcija sa tačkama */
-        .info-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 20px; /* Razmak između tačaka */
-        }
-
-        /* Tačke sa tekstom */
-        .info-point {
-            display: flex;
-            align-items: center;
-        }
-
-        .info-point .dot {
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .info-point.red .dot {
-            background-color: red;
-        }
-
-        .info-point.blue .dot {
-            background-color: blue;
-        }
-
-        .info-point.green .dot {
-            background-color: green;
-        }
-
-        .info-point span {
-            font-size: 16px;
-            color: #333;
+            min-height: 200px; /* Koristimo min-height umesto fiksne visine */
         }
 
         /* Slika unutar okvira */
@@ -88,28 +58,61 @@
             width: 100%;
             text-align: center;
         }
+
+        /* Stil za krugove sa tekstom */
+        .circle {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .red-circle {
+            background-color: red;
+        }
+
+        .blue-circle {
+            background-color: blue;
+        }
+
+        .green-circle {
+            background-color: green;
+        }
+
+        /* Stil za tekst sa krugovima */
+        .circle-text {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <div class="info-section">
-        <div class="info-point red">
-            <div class="dot"></div>
-            <span>Postavi svoj oglas u Aleksincu</span>
-        </div>
-        <div class="info-point blue">
-            <div class="dot"></div>
-            <span>Pogledaj sve oglase u Aleksincu</span>
-        </div>
-        <div class="info-point green">
-            <div class="dot"></div>
-            <span>Gde će sve oglas biti prikazan</span>
-        </div>
+    <div class="circle-text">
+        <span class="circle red-circle">1</span>
+        <span>Postavi svoj oglas u Aleksincu</span>
+    </div>
+    <div class="circle-text">
+        <span class="circle blue-circle">2</span>
+        <span>Pogledaj sve oglase u Aleksincu</span>
+    </div>
+    <div class="circle-text">
+        <span class="circle green-circle">3</span>
+        <span>Gde će svi oglasi biti prikazani</span>
     </div>
 
-    <!-- HTML za prikaz poslednjeg posta -->
+    <!-- HTML za prikaz poslednjeg posta sa https://oglasi.infooglasi.rs/oglasi/oglasialeksinac/ -->
     <div id="oglasialeksinac-latest-post-container" class="oglasialeksinac-container">
         <a id="oglasialeksinac-latest-post-link" href="#" target="_blank" class="oglasialeksinac-link" rel="noopener">
+            <!-- Slika unutar okvira -->
             <img id="oglasialeksinac-latest-post-image" src="#" alt="Latest Post Image" class="oglasialeksinac-image" />
+            <!-- Naslov unutar okvira -->
             <h2 id="oglasialeksinac-latest-post-title" class="oglasialeksinac-title">Latest Post Title</h2>
         </a>
     </div>
@@ -143,11 +146,14 @@
             });
         }
 
+        // Pozivanje funkcije za dobijanje poslednjeg posta kada se stranica učita
         $(document).ready(function() {
             fetchOglasialeksinacLatestPost();
 
+            // Dodajemo event za klik
             $('#oglasialeksinac-latest-post-container').click(function() {
                 var postURL = $('#oglasialeksinac-latest-post-link').attr('href');
+                // Otvori novi prozor sa postom
                 window.open(postURL, '_blank');
             });
         });
