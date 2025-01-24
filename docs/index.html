@@ -1,53 +1,100 @@
-<!DOCTYPE html> 
-<html lang="sr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja nova stranica</title>
-    <style>
-        /* Stil za telo stranice */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e0f7fa; /* svetlo plava pozadina */
-            color: #2c3e50; /* tamna boja teksta */
-            margin: 0;
-            padding: 0;
+<!-- HTML za prikaz poslednjeg posta sa https://oglasi.infooglasi.rs/oglasi/oglasialeksinac/ -->
+<div id="oglasialeksinac-latest-post-container" class="oglasialeksinac-container">
+    <a id="oglasialeksinac-latest-post-link" href="#" target="_blank" class="oglasialeksinac-link" rel="noopener">
+        <!-- Slika unutar okvira -->
+        <img id="oglasialeksinac-latest-post-image" src="#" alt="Latest Post Image" class="oglasialeksinac-image" />
+        <!-- Naslov unutar okvira -->
+        <h2 id="oglasialeksinac-latest-post-title" class="oglasialeksinac-title">Latest Post Title</h2>
+    </a>
+</div>
+
+<style>
+/* Glavni okvir */
+.oglasialeksinac-container {
+    border: 2px solid #333;
+    padding: 10px;
+    max-width: 100%;
+    margin: 20px auto;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    overflow: hidden; /* Sprečava pojavu klizača */
+    height: 500px; /* Ograničavamo visinu na 500px */
+}
+
+/* Slika unutar okvira */
+.oglasialeksinac-image {
+    width: 100%;
+    height: auto; /* Održava proporcije slike */
+    display: block;
+    margin-bottom: 10px;
+    max-height: 350px; /* Ograničavamo visinu slike */
+    object-fit: contain; /* Održava proporcije slike unutar datog prostora */
+}
+
+/* Naslov unutar okvira */
+.oglasialeksinac-title {
+    font-size: 20px;
+    text-align: center;
+    margin: 10px 0 0 0;
+    color: #333;
+    word-wrap: break-word; /* Omogućava prelom teksta ako je predug */
+}
+
+/* Link bez dekoracija */
+.oglasialeksinac-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+    text-align: center;
+    overflow: hidden; /* Sprečava prekomerno širenje */
+    max-height: 100%;
+}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+function fetchOglasialeksinacLatestPost() {
+    var wordpressURL = "https://oglasi.infooglasi.rs/oglasi/oglasialeksinac/wp-json/wp/v2/posts?per_page=1&_embed";
+
+    $.ajax({
+        url: wordpressURL,
+        dataType: 'json',
+        success: function(data) {
+            if (data && data.length > 0) {
+                var latestPost = data[0];
+                var postTitle = latestPost.title.rendered || "Untitled";
+                var postImageURL = latestPost._embedded && latestPost._embedded["wp:featuredmedia"] ? latestPost._embedded["wp:featuredmedia"][0].source_url : "default_image.jpg";
+                var postURL = latestPost.link || "#";
+
+                postTitle = $('<textarea>').html(postTitle).text();
+                $('#oglasialeksinac-latest-post-image').attr('src', postImageURL);
+                $('#oglasialeksinac-latest-post-title').text(postTitle);
+                $('#oglasialeksinac-latest-post-link').attr('href', postURL);
+            } else {
+                $('#oglasialeksinac-latest-post-title').text("Nema dostupnih postova.");
+            }
+        },
+        error: function(xhr, status, error) {
+            $('#oglasialeksinac-latest-post-title').text("Došlo je do greške.");
         }
-        /* Stil za naslov */
-        h1 {
-            text-align: center;
-            color: #00796b; /* tamno zelena boja */
-            margin-top: 50px;
-        }
-        /* Stil za paragraf */
-        p {
-            font-size: 18px;
-            text-align: center;
-            color: #34495e; /* siva boja */
-            margin-top: 20px;
-        }
-        /* Stil za dugme */
-        .button {
-            display: block;
-            width: 200px;
-            margin: 30px auto;
-            padding: 15px;
-            text-align: center;
-            background-color: #00796b;
-            color: white;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .button:hover {
-            background-color: #004d40;
-        }
-    </style>
-</head>
-<body>
-    <h1>Dobrodošli na moju novu stranicu 888888888888888888!</h1>
-    <p>Ovo je stranica sa nekoliko novih stilova i dugmetom.</p>
-    <button class="button" onclick="alert('Dugme je kliknuto!')">Klikni me!</button>
-</body>
-</html>
+    });
+}
+
+// Pozivanje funkcije za dobijanje poslednjeg posta kada se stranica učita
+$(document).ready(function() {
+    fetchOglasialeksinacLatestPost();
+
+    // Dodajemo event za klik
+    $('#oglasialeksinac-latest-post-container').click(function() {
+        var postURL = $('#oglasialeksinac-latest-post-link').attr('href');
+        // Otvori novi prozor sa postom
+        window.open(postURL, '_blank');
+    });
+});
+</script>
