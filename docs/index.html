@@ -3,160 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja stranica</title>
+    <title>Prikaz Oglasa</title>
     <style>
-        /* Stil za telo stranice */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff; /* svetlo plava pozadina */
-            color: #333; /* tamna boja teksta */
+        /* Postavljanje iframe-a da zauzima celu širinu i visinu */
+        html, body {
             margin: 0;
             padding: 0;
-        }
-
-        /* Glavni okvir */
-        .oglasialeksinac-container {
-            border: 2px solid #333;
-            padding: 10px;
-            max-width: 100%;
-            margin: 20px auto;
-            cursor: pointer;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
-            overflow: hidden;
-            min-height: 200px; /* Koristimo min-height umesto fiksne visine */
-        }
-
-        /* Slika unutar okvira */
-        .oglasialeksinac-image {
             width: 100%;
-            height: auto;
-            display: block;
-            margin-bottom: 10px;
-            max-height: 350px;
-            object-fit: contain;
+            height: 100%;
         }
 
-        /* Naslov unutar okvira */
-        .oglasialeksinac-title {
-            font-size: 20px;
-            text-align: center;
-            margin: 10px 0 0 0;
-            color: #333;
-            word-wrap: break-word;
-        }
-
-        /* Link bez dekoracija */
-        .oglasialeksinac-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
+        iframe {
             width: 100%;
-            text-align: center;
-        }
-
-        /* Stil za krugove sa tekstom */
-        .circle {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 20px;
-            color: white;
-            margin-right: 10px;
-            font-size: 14px;
-        }
-
-        .red-circle {
-            background-color: red;
-        }
-
-        .blue-circle {
-            background-color: blue;
-        }
-
-        .green-circle {
-            background-color: green;
-        }
-
-        /* Stil za tekst sa krugovima */
-        .circle-text {
-            display: inline-block;
-            margin-bottom: 10px;
-            font-size: 16px;
-            color: #333;
+            height: 1500px; /* Fiksna visina za iframe */
+            border: none;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="circle-text">
-        <span class="circle red-circle">1</span>
-        <span>Postavi svoj oglas u Aleksincu</span>
-    </div>
-    <div class="circle-text">
-        <span class="circle blue-circle">2</span>
-        <span>Pogledaj sve oglase u Aleksincu</span>
-    </div>
-    <div class="circle-text">
-        <span class="circle green-circle">3</span>
-        <span>Gde će svi oglasi biti prikazani</span>
-    </div>
-
-    <!-- HTML za prikaz poslednjeg posta sa https://oglasi.infooglasi.rs/oglasi/oglasialeksinac/ -->
-    <div id="oglasialeksinac-latest-post-container" class="oglasialeksinac-container">
-        <a id="oglasialeksinac-latest-post-link" href="#" target="_blank" class="oglasialeksinac-link" rel="noopener">
-            <!-- Slika unutar okvira -->
-            <img id="oglasialeksinac-latest-post-image" src="#" alt="Latest Post Image" class="oglasialeksinac-image" />
-            <!-- Naslov unutar okvira -->
-            <h2 id="oglasialeksinac-latest-post-title" class="oglasialeksinac-title">Latest Post Title</h2>
-        </a>
-    </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        function fetchOglasialeksinacLatestPost() {
-            var wordpressURL = "https://oglasi.infooglasi.rs/oglasi/oglasialeksinac/wp-json/wp/v2/posts?per_page=1&_embed";
-
-            $.ajax({
-                url: wordpressURL,
-                dataType: 'json',
-                success: function(data) {
-                    if (data && data.length > 0) {
-                        var latestPost = data[0];
-                        var postTitle = latestPost.title.rendered || "Untitled";
-                        var postImageURL = latestPost._embedded && latestPost._embedded["wp:featuredmedia"] ? latestPost._embedded["wp:featuredmedia"][0].source_url : "default_image.jpg";
-                        var postURL = latestPost.link || "#";
-
-                        postTitle = $('<textarea>').html(postTitle).text();
-                        $('#oglasialeksinac-latest-post-image').attr('src', postImageURL);
-                        $('#oglasialeksinac-latest-post-title').text(postTitle);
-                        $('#oglasialeksinac-latest-post-link').attr('href', postURL);
-                    } else {
-                        $('#oglasialeksinac-latest-post-title').text("Nema dostupnih postova.");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    $('#oglasialeksinac-latest-post-title').text("Došlo je do greške.");
-                }
-            });
-        }
-
-        // Pozivanje funkcije za dobijanje poslednjeg posta kada se stranica učita
-        $(document).ready(function() {
-            fetchOglasialeksinacLatestPost();
-
-            // Dodajemo event za klik
-            $('#oglasialeksinac-latest-post-container').click(function() {
-                var postURL = $('#oglasialeksinac-latest-post-link').attr('href');
-                // Otvori novi prozor sa postom
-                window.open(postURL, '_blank');
-            });
-        });
-    </script>
+    <!-- Iframe sa fiksnom visinom od 1200px -->
+    <iframe src="https://infooglasi.rs/oglasi-sa-infooglasi-rs/" frameborder="0" scrolling="no"></iframe>
 </body>
 </html>
