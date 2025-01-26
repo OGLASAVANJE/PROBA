@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prikaz Oglasa</title>
     <style>
-        /* Postavljanje iframe-a da zauzima celu širinu i visinu */
+        /* Postavljanje iframe-a da zauzima celu širinu */
         html, body {
             margin: 0;
             padding: 0;
@@ -15,14 +15,24 @@
 
         iframe {
             width: 100%;
-            height: 1200px; /* Fiksna visina za iframe */
             border: none;
             display: block;
         }
     </style>
 </head>
 <body>
-    <!-- Iframe sa fiksnom visinom od 1200px -->
-    <iframe src="https://infooglasi.rs/oglasi-sa-infooglasi-rs/" frameborder="0" scrolling="no"></iframe>
+    <!-- Iframe sa dinamičkom visinom -->
+    <iframe id="oglasIframe" src="https://infooglasi.rs/oglasi-sa-infooglasi-rs/" frameborder="0" scrolling="no"></iframe>
+
+    <script>
+        // Funkcija koja automatski prilagođava visinu iframe-a
+        function adjustIframeHeight() {
+            var iframe = document.getElementById('oglasIframe');
+            iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+        }
+
+        // Kada se učita sadržaj iframe-a, pozivamo funkciju za podešavanje visine
+        document.getElementById('oglasIframe').onload = adjustIframeHeight;
+    </script>
 </body>
 </html>
